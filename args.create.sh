@@ -1,5 +1,6 @@
 #!/bin/sh
-# uwe.schimon@mailpost.de 20211114 1201 02
+# 2da6837fde0a5a4e6dae85444ff06390
+# uwe.schimon@mailpost.de 20211114 1201 02 05
 # arg-function generator, depend of $usage
 
 FILE="args.sh"
@@ -15,7 +16,8 @@ if [ -z \"\$1\" ]; then echo \$USAGE;
 else
  for arg in \"\$@\"; do
   case \$arg in
-	-#) A=true; shift;;" > $FILE
+	-#) A=true; shift;;
+	-:) A=""; shift;;" > $FILE
 for i in $USAGE; do echo $i | sed -E "s/[^a-zA-Z_\|]//g" | awk -F'|' '{print "\t-" $1 "=*|--" $2 "=*)\t" toupper($1) "=\"\$\{arg#*=\}\";\t" toupper($2) "=\"\$" toupper($1) "\";\tif [ $A ]; then echo " toupper($2) "=" toupper($1) "=\"\$" toupper($1) "\"; fi;  shift ;;"}' >> $FILE; done
 echo "  esac
  done
