@@ -1,6 +1,6 @@
 #!/bin/sh
-# 2da6837fde0a5a4e6dae85444ff06390
-# uwe.schimon@mailpost.de 20211114 1201 02 05
+# 1436797ee4739c98201abc63728b725b
+# uwe.schimon@mailpost.de 20211114 1201 02 05 09
 # arg-function generator, depend of $usage
 
 FILE="args.sh"
@@ -16,23 +16,11 @@ if [ -z \"\$1\" ]; then echo \$USAGE;
 else
  for arg in \"\$@\"; do
   case \$arg in
-	-#) A=true; shift;;
-	-:) A=""; shift;;" > $FILE
-for i in $USAGE; do echo $i | sed -E "s/[^a-zA-Z_\|]//g" | awk -F'|' '{print "\t-" $1 "=*|--" $2 "=*)\t" toupper($1) "=\"\$\{arg#*=\}\";\t" toupper($2) "=\"\$" toupper($1) "\";\tif [ $A ]; then echo " toupper($2) "=" toupper($1) "=\"\$" toupper($1) "\"; fi;  shift ;;"}' >> $FILE; done
+        -#) A=true; shift;;
+        -:) A=\"\"; shift;;" > $FILE
+for i in $USAGE; do echo $i | sed -E "s/[^a-zA-Z_\|]//g" | awk -F'|' '{print "\t-" $1 "=*|--" $2 "=*)\t" toupper($1) "=\"\044\173arg#*=\175\";\t" toupper($2) "=\"\044" toupper($1) "\";\tif [ $A ]; then echo " toupper($2) "=" toupper($1) "=\"\044" toupper($1) "\"; fi;  shift ;;"}' >> $FILE; done
 echo "  esac
  done
 fi
 }">>$FILE
 chmod +x $FILE
-
-## set default-values
-# TARGET_LANG="DE"
-# SOURCE_LANG="EN"
-## define usage
-# echo -n "[-h|--help]= [-f|--file]= [-tl|--target_lang]= [-sl|--source_lang]= [-st|--stage]=" > args.usage
-## call the args-script creator
-# . ./args.create.sh
-## include this generated script
-# . ./args.sh
-## call the function in it
-# args $@
