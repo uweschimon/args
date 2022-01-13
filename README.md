@@ -5,15 +5,15 @@ args supports this work in a simple way.
 The following is a small example:
 ==
 A script collectimages.sh is supposed to collect JPG-images in a folder. It is to be called with ./collectimages.sh -f="$HOME".
-
- #!
- F=/home # default value
- TP="/tmp/$$"; mkdir -p $TP
- echo -n "[-f|--folder]=" > $TP/args.usage
- . cargs; cargs $TP; . $TP/args.sh; args $@;# rm -r $TP
- echo "JPG in folder: $FOLDER:"
- find $FOLDER -name "*.JPG"
-
+```
+#!/usr/bin/sh
+F=/home/ # default value
+TP="/tmp/$$"; mkdir -p $TP
+echo -n "[-f|--folder]=" > $TP/args.usage
+. cargs; cargs $TP; . $TP/args.sh; args $@;# rm -r $TP
+echo "JPG in folder: $FOLDER:"
+find $FOLDER -name "*.JPG"
+```
 cargs (in /usr/bin/local/cargs) creates, depending on args.usage the function args,
 which is called in the script with args $@, and does the passing of the required arguments.
 In the example the value is stored in $F or $FOLDER and can be used in the script.
